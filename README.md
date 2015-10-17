@@ -65,11 +65,9 @@ the specific core that doesn't run any kernel.
      TLIBTYPE flags (where 'H' stands for Host and 'T' for Target). The default
      behavior is to produce static libraries.
 
-     
     make
     
   Or
-
 
     make HLIBTYPE=so TLIBTYP=a
     
