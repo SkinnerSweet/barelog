@@ -1,0 +1,12 @@
+<map id="common/include/barelog_mem_space.h" name="common/include/barelog_mem_space.h">
+<area shape="rect" id="node2" href="$barelog__mem__space_8c_source.html" title="common/barelog_mem\l_space.c" alt="" coords="171,95,325,136"/>
+<area shape="rect" id="node3" href="$barelog__platform_8h.html" title="Module defining a platform to use barelog against. " alt="" coords="349,95,512,136"/>
+<area shape="rect" id="node5" href="$barelog__host__mem__manager_8c_source.html" title="host/barelog_host_mem\l_manager.c" alt="" coords="511,273,673,315"/>
+<area shape="rect" id="node4" href="$barelog__host__mem__manager_8h.html" title="Module defining all functions offered by barelog for the host program. " alt="" coords="351,184,510,225"/>
+<area shape="rect" id="node8" href="$barelog__device__mem__manager_8h.html" title="Module defining all functions offered by barelog for the host program. " alt="" coords="105,184,276,225"/>
+<area shape="rect" id="node10" href="$barelog__logger_8h.html" title="Module providing some nice wrapping for the device_mem_manager. " alt="" coords="176,273,323,315"/>
+<area shape="rect" id="node6" href="$barelog__host_8h.html" title="Module providing some nice wrapping for the host_mem_manager. " alt="" coords="348,273,487,315"/>
+<area shape="rect" id="node7" href="$barelog__host_8c_source.html" title="host/barelog_host.c" alt="" coords="349,363,485,389"/>
+<area shape="rect" id="node9" href="$barelog__device__mem__manager_8c_source.html" title="target/barelog_device\l_mem_manager.c" alt="" coords="5,273,152,315"/>
+<area shape="rect" id="node11" href="$barelog__logger_8c_source.html" title="target/barelog_logger.c" alt="" coords="171,363,325,389"/>
+</map>

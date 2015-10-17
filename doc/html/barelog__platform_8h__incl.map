@@ -1,0 +1,6 @@
+<map id="common/include/barelog_platform.h" name="common/include/barelog_platform.h">
+<area shape="rect" id="node3" href="$barelog__mem__space_8h.html" title="Module defining mem_space structure. " alt="" coords="22,95,175,121"/>
+<area shape="rect" id="node4" href="$barelog__internal_8h.html" title="Module defining the internal configurations of barelog. " alt="" coords="199,95,323,121"/>
+<area shape="rect" id="node5" href="$barelog__config_8h.html" title="Module defining the configurations used by barelog. " alt="" coords="203,169,320,196"/>
+<area shape="rect" id="node6" href="$barelog__parallella_8h.html" title="Module defining the configurations used by barelog specifically for the Parallella platform..." alt="" coords="195,244,328,271"/>
+</map>

@@ -1,0 +1,11 @@
+<map id="host/include/barelog_host.h" name="host/include/barelog_host.h">
+<area shape="rect" id="node2" href="$barelog__host__mem__manager_8h.html" title="Module defining all functions offered by barelog for the host program. " alt="" coords="133,95,333,121"/>
+<area shape="rect" id="node7" href="$barelog__internal_8h.html" title="Module defining the internal configurations of barelog. " alt="" coords="547,319,671,345"/>
+<area shape="rect" id="node5" href="$barelog__platform_8h.html" title="Module defining a platform to use barelog against. " alt="" coords="118,169,247,196"/>
+<area shape="rect" id="node10" href="$barelog__buffer_8h.html" title="Module defining the different buffers used by barelog&#39;s internals. " alt="" coords="370,169,485,196"/>
+<area shape="rect" id="node13" href="$barelog__policy_8h.html" title="Module defining the different policies that can be used when an events buffer is full. " alt="" coords="227,244,343,271"/>
+<area shape="rect" id="node6" href="$barelog__mem__space_8h.html" title="Module defining mem_space structure. " alt="" coords="50,244,203,271"/>
+<area shape="rect" id="node8" href="$barelog__config_8h.html" title="Module defining the configurations used by barelog. " alt="" coords="550,393,668,420"/>
+<area shape="rect" id="node9" href="$barelog__parallella_8h.html" title="Module defining the configurations used by barelog specifically for the Parallella platform..." alt="" coords="542,468,676,495"/>
+<area shape="rect" id="node11" href="$barelog__event_8h.html" title="Module defining the events and their related functions. " alt="" coords="418,244,533,271"/>
+</map>

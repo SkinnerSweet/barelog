@@ -1,0 +1,27 @@
+* La numerotation utilisee des cores doit commencer a 0
+* Le module barelog_device_mem_manager doit etre charge dans la memoire locale de chaque core logge.
+* Le programme prend NB_CORES octets supplementaires que ceux annonces (pour stocker events) dans la memoire partagee pour synchronisation entre host et device.
+* Mutex mem partagee ne fonctionne que parce que eCore single threaded.
+* Pas de test de depassement entre ce qui est dispo sur plateforme et ce que barelog utilise au total.
+
+
+POUR RAJOUTER PARAMETRES
+
+1. Definir la taille prise (toujours au debut de l'espace memoire alloue) dans le fichier barelog_internal.h ex :
+#if BARELOG_SAFE_MODE
+#define BARELOG_NB_MUTEX_BYTES BARELOG_NB_CORES//(((BARELOG_NB_CORES-1)/8)+1)
+#else
+#define BARELOG_NB_MUTEX_BYTES 0
+#endif
+
+2. Editer la ligne suivante de barelog_internal.h pour tenir compte des nouvelles donnees
+#define BARELOG_SHARED_MEM_DATA_OFFSET (BARELOG_NB_MUTEX_BYTES)
+
+3. Editer la ligne suivante de barelog_internal.h pour definir un nouvel espace dans le manager de l'hote
+#define BARELOG_HOST_NB_MEM_SPACE (BARELOG_NB_CORES + BARELOG_SAFE_MODE)
+
+4. Modifier les fonctions host_mem_manager_init et host_mem_manager_finalize de barelog_host_mem_manager.c pour tenir
+compre de votre nouvel espace. ATTENTION : les NB_CORES premieres cases du tableau contenant les mem_space
+sont reservees pour les evenements en provenance des cores.
+
+5. Utiliser les nouvelles donnees allouees.

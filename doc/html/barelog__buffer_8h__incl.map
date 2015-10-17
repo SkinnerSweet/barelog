@@ -1,0 +1,6 @@
+<map id="common/include/barelog_buffer.h" name="common/include/barelog_buffer.h">
+<area shape="rect" id="node3" href="$barelog__internal_8h.html" title="Module defining the internal configurations of barelog. " alt="" coords="189,169,313,196"/>
+<area shape="rect" id="node6" href="$barelog__event_8h.html" title="Module defining the events and their related functions. " alt="" coords="75,95,190,121"/>
+<area shape="rect" id="node4" href="$barelog__config_8h.html" title="Module defining the configurations used by barelog. " alt="" coords="193,244,310,271"/>
+<area shape="rect" id="node5" href="$barelog__parallella_8h.html" title="Module defining the configurations used by barelog specifically for the Parallella platform..." alt="" coords="185,319,318,345"/>
+</map>
