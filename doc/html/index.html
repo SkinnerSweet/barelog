@@ -108,7 +108,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <p><b>Key features</b>:</p>
 <ul>
 <li>Entirely configurable: you have full control over the functions used by the modules to interact with the shared memory as well as the total amount of memory used by barelog (inside each core as well as in the shared section).</li>
-<li>Easy to use: a simple call of the <b><a class="el" href="barelog__logger_8h.html#af7e4e57f4ec0086f1354cd69674e1f43">barelog_log()</a></b> function (after proper initialization of the modules) allows you to log events without any further complications.</li>
+<li>Easy to use: a simple call of the <b><a class="el" href="barelog__logger_8h.html#a3f42b27ec9aa7b19502fe9db114a39f4">barelog_log()</a></b> function (after proper initialization of the modules) allows you to log events without any further complications.</li>
 <li>Provides several "functioning modes": you can enable/disable some parts of the code to suit your needs. For example, to gain some performance, you might want to disable the "DEBUG_MODE" that only offers some internal debugging functions.</li>
 <li>Flush events whenever you want: a round-buffer allows you to store the events in the local memory of the logged core as long as you want before actually flushing them into the shared memory. You have full control over which stored event to actually put into the shared space.</li>
 <li>Format the events data as you want: since the logging module use a modified version of "snprintf" you can store any type of data (represented as a string) in a event.</li>
@@ -124,12 +124,13 @@ $(document).ready(function(){initNavTree('index.html','');});
 <ol type="1">
 <li>You first need to edit the <b>common/include/config.h</b> file to ensure that barelog is configured to suit your needs. Note that you can directly include a custom configuration header by placing it inside the <b>platforms</b> directory and then including it.</li>
 <li>Once it's done, you may want need to edit the Makefile to properly set the compiler used to compile the target module code. You can also set the TARGET_CC flag during the 'make'.</li>
-<li>Then simply compile the modules using the provided Makefile. You can specify whether or not to use a cross-compiling toolchain by setting the CROSS_COMPILE flag. You can also decide if you rather want the resulting libraries to be static (.a) or shared (.so) by setting the HLIBTYPE and/or TLIBTYPE flags (where 'H' stands for Host and 'T' for Target). The default behavior is to produce static libraries.</li>
+<li><p class="startli">Then simply compile the modules using the provided Makefile. You can specify whether or not to use a cross-compiling toolchain by setting the CROSS_COMPILE flag. You can also decide if you rather want the resulting libraries to be static (.a) or shared (.so) by setting the HLIBTYPE and/or TLIBTYPE flags (where 'H' stands for Host and 'T' for Target). The default behavior is to produce static libraries.</p>
+<p class="startli">make</p>
+</li>
 </ol>
-<pre class="fragment">make
-</pre><p>Or</p>
-<pre class="fragment">make HLIBTYPE=so TLIBTYP=a
-</pre><p>If everything went well, two libraries should have been produced in the <b>libs</b> folder :</p>
+<p>Or</p>
+<p>make HLIBTYPE=so TLIBTYP=a</p>
+<p>If everything went well, two libraries should have been produced in the <b>libs</b> folder :</p>
 <ul>
 <li><b>libbarelog_host</b>: targets the host program.</li>
 <li><b>libbarelog_logger</b>: targets the target program.</li>
@@ -141,7 +142,7 @@ $(document).ready(function(){initNavTree('index.html','');});
 <ol type="1">
 <li>Initialize the host: you will have to create the <b><a class="el" href="structbarelog__platform__t.html">barelog_platform_t</a></b> along with some memory management functions and to register them to the logger on the host by calling the <b><a class="el" href="barelog__host_8h.html#adc51587704401a7222bd82433c881477">barelog_host_init()</a></b> function. This will allocate all the needed chunks of shared memory according to the "config" file and initialize the all host module.</li>
 <li>Initialize the target: this basically involve the same steps as above but with everything specific to the target.</li>
-<li>Instrument the target code: by using a combination of the <b><a class="el" href="barelog__logger_8h.html#af7e4e57f4ec0086f1354cd69674e1f43">barelog_log()</a></b> <b><a class="el" href="barelog__logger_8h.html#a4e17f1118b4323a4713ad3fd44029ad6">barelog_flush()</a></b> and <b><a class="el" href="barelog__logger_8h.html#a35151c45dc22a94d4ef0b1e8d8da34d7">barelog_clean()</a></b>, you should be able to produce and manage the events inside the logged core.</li>
+<li>Instrument the target code: by using a combination of the <b><a class="el" href="barelog__logger_8h.html#a3f42b27ec9aa7b19502fe9db114a39f4">barelog_log()</a></b> <b><a class="el" href="barelog__logger_8h.html#a4e17f1118b4323a4713ad3fd44029ad6">barelog_flush()</a></b> and <b><a class="el" href="barelog__logger_8h.html#a35151c45dc22a94d4ef0b1e8d8da34d7">barelog_clean()</a></b>, you should be able to produce and manage the events inside the logged core.</li>
 <li>Retrieve the events on the host: the host API offers some functions to extract and display the logged events (please see the given example).</li>
 <li>Finalize the logger: once you're done logging around, use the **barelog_finalize() function to ensure every resource is correctly deallocated.</li>
 </ol>
@@ -178,7 +179,7 @@ gcc -L path/to/libraries/ host_main.c -lbarelog_host
 <!-- start footer part -->
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
-    <li class="footer">Generated on Sat Oct 17 2015 16:57:15 for barelog by
+    <li class="footer">Generated on Wed Nov 25 2015 15:31:26 for barelog by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

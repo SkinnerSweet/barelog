@@ -115,6 +115,12 @@ $(document).ready(function(){initNavTree('structbarelog__host__mem__manager__t.h
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
+<tr class="memitem:a85bd5cd45c9b351754e4e872232387e1"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85bd5cd45c9b351754e4e872232387e1"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>initialized</b></td></tr>
+<tr class="separator:a85bd5cd45c9b351754e4e872232387e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec43dc3fe8c62a7d10ff1923dd7a8a8e"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aec43dc3fe8c62a7d10ff1923dd7a8a8e"></a>
+barelog_mem_space_t&#160;</td><td class="memItemRight" valign="bottom"><b>mem_space</b> [<a class="el" href="barelog__internal_8h.html#a8b7b9073115ca0b347395e670a18b5ae">BARELOG_HOST_NB_MEM_SPACE</a>]</td></tr>
+<tr class="separator:aec43dc3fe8c62a7d10ff1923dd7a8a8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab6850266cd969fd058c96e26ffb4cc3d"><td class="memItemLeft" align="right" valign="top">void *(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarelog__host__mem__manager__t.html#ab6850266cd969fd058c96e26ffb4cc3d">init</a> )(void *address, size_t size, void *data)</td></tr>
 <tr class="separator:ab6850266cd969fd058c96e26ffb4cc3d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac43e7350dc8a5b6eba01291735692b26"><td class="memItemLeft" align="right" valign="top">int8_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarelog__host__mem__manager__t.html#ac43e7350dc8a5b6eba01291735692b26">read</a> )(const void *address, size_t size, void *buffer)</td></tr>
@@ -146,7 +152,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS if all is clear, an error code otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00080">80</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00088">88</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
 
 </div>
 </div>
@@ -169,7 +175,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>must return the virtual address corresponding to the base of the allocated memory space (if any). After the initialization, one must use this address to access the allocated memory within the host. Should return NULL in case something went wrong. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00061">61</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00069">69</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
 
 </div>
 </div>
@@ -192,7 +198,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS if all is clear, an error code otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00068">68</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00076">76</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
 
 </div>
 </div>
@@ -215,7 +221,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS if all is clear, an error code otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00075">75</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__host__mem__manager_8h_source.html#l00083">83</a> of file <a class="el" href="barelog__host__mem__manager_8h_source.html">barelog_host_mem_manager.h</a>.</p>
 
 </div>
 </div>
@@ -228,7 +234,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structbarelog__host__mem__manager__t.html">barelog_host_mem_manager_t</a></li>
-    <li class="footer">Generated on Sat Oct 17 2015 16:57:15 for barelog by
+    <li class="footer">Generated on Wed Nov 25 2015 15:31:26 for barelog by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

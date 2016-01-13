@@ -135,17 +135,17 @@ int main(int argc, char **argv) {
 	barelog_start();
 
 	uint32_t clock00 = get_clock();
-	barelog_log("Program starts at %u.", clock00);
+	barelog_log(BARELOG_CRITICAL_LVL, "Program starts at %u.", clock00);
 
 	uint32_t clock01 = get_clock();
 	(void) clock01;
 
 	char buff[50] = {0};
-	barelog_log("e_read begins.");
+	barelog_log(BARELOG_INFO_LVL, "e_read begins.");
 	barelog_flush(2);
 	barelog_clean(2);
 	e_read(&e_emem_config, tmp, 0, 0, (void *)(0x8f000000+BARELOG_SHARED_MEM_MAX), 17);
-	barelog_log("e_read ends.%u", get_clock());
+	barelog_log(BARELOG_INFO_LVL, "e_read ends.%u", get_clock());
 
 	uint32_t clock1 = get_clock();
 	(void) clock1;
@@ -175,13 +175,13 @@ int main(int argc, char **argv) {
 
 	snprintf(buff, 50, "%s from core %u", tmp, (my_row*4 + my_col));
 
-	barelog_log("e_write begins.");
+	barelog_log(BARELOG_DEBUG_LVL, "e_write begins.");
 	barelog_flush(1);
 	barelog_clean(1);
 	e_write((void*) &e_emem_config, buff, 0, 0, (void *)(0x8f000000+BARELOG_SHARED_MEM_MAX + (my_row*4+my_col)*50), 50);
 
-	barelog_log("e_write ends.");
-	barelog_log("Program ends at %u", get_clock());
+	barelog_immediate_log(BARELOG_DEBUG_LVL, "e_write ends.");
+	barelog_log(BARELOG_CRITICAL_LVL, "Program ends at %u", get_clock());
 	barelog_flush(6); // Voluntary flushing too many events to check everything went well.
 
 

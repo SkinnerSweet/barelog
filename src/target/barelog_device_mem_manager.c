@@ -38,12 +38,8 @@
 /* FIXME : There could be cases where we will not have any attribute to ensure
  that the data are correctly stored in the local memory. We should look for ways to
  counter those cases. */
-static uint32_t core BARELOG_LOCAL_MEM_ATTRIBUTE;
-static barelog_mem_space_t mem_space BARELOG_LOCAL_MEM_ATTRIBUTE;
-static barelog_device_mem_manager_t manager BARELOG_LOCAL_MEM_ATTRIBUTE;
 
-static barelog_event_buffer_t events BARELOG_LOCAL_MEM_ATTRIBUTE;
-static barelog_shared_mem_buffer_t shr_events BARELOG_LOCAL_MEM_ATTRIBUTE;
+static barelog_device_mem_manager_t manager BARELOG_LOCAL_MEM_ATTRIBUTE;
 
 /* Host/Device synchronization functions */
 #if BARELOG_SAFE_MODE
@@ -83,13 +79,11 @@ while (__mutex) { \
 
 #if BARELOG_DEBUG_MODE
 
-static void *debug_address;
-
 void barelog_debug_log(char *file, int line, int8_t errcode,
 	const char *message) {
 	barelog_event_t event;
 	snprintf(event.data, BARELOG_BUF_MAX_SIZE, "%s:%d:%i: %s", file, line, errcode, message);
-	memcpy(debug_address, &event, sizeof(barelog_event_t));
+	memcpy(manager.debug_address, &event, sizeof(barelog_event_t));
 }
 
 #endif // BARELOG_DEBUG_MODE
@@ -109,13 +103,9 @@ int8_t device_mem_manager_init(const uint32_t my_core,
 	int8_t (*read)(const void * address, size_t size, void *buffer),
 	int8_t (*write)(void * address, size_t size, const void *buffer)) {
 
-#if BARELOG_DEBUG_MODE
-	debug_address = platform.mem_space.phy_base + BARELOG_DEBUG_OFF;
-#endif
-
 #if BARELOG_CHECK_MODE || BARELOG_DEBUG_MODE
 	int8_t ret = 0;
-	if (!read || !write || !platform.mem_space.phy_base) {
+	if (manager.initialized || !read || !write || !platform.mem_space.phy_base) {
 		ret = BARELOG_UNINITIALIZED_PARAM_ERR;
 		BARELOG_DEBUG(__FILE__, __LINE__, ret,
 			"device_mem_manager_init param");
@@ -123,8 +113,11 @@ int8_t device_mem_manager_init(const uint32_t my_core,
 	}
 #endif
 
-	core = my_core;
+#if BARELOG_DEBUG_MODE
+	manager.debug_address = platform.mem_space.phy_base + BARELOG_DEBUG_OFF;
+#endif
 
+	manager.core = my_core;
 	manager.read = read;
 	manager.write = write;
 	manager.buffer_policy = buffer_policy;
@@ -132,32 +125,34 @@ int8_t device_mem_manager_init(const uint32_t my_core,
 
 	void *base = platform.mem_space.phy_base
 		+ BARELOG_SHARED_MEM_DATA_OFFSET;
-	mem_space.phy_base = base + core * BARELOG_SHARED_MEM_PER_CORE_MAX;
-	mem_space.length = BARELOG_SHARED_MEM_PER_CORE_MAX;
-	mem_space.alignment = platform.mem_space.alignment;
-	mem_space.word_size = platform.mem_space.word_size;
-	mem_space.data = 0;
-	mem_space.base = mem_space.phy_base;
+	manager.mem_space.phy_base = base + manager.core * BARELOG_SHARED_MEM_PER_CORE_MAX;
+	manager.mem_space.length = BARELOG_SHARED_MEM_PER_CORE_MAX;
+	manager.mem_space.alignment = platform.mem_space.alignment;
+	manager.mem_space.word_size = platform.mem_space.word_size;
+	manager.mem_space.data = 0;
+	manager.mem_space.base = manager.mem_space.phy_base;
 
-	shr_events.events = (barelog_event_t *) (mem_space.phy_base);
-	shr_events.imax = BARELOG_SHARED_MEM_PER_CORE_MAX
+	manager.shr_events.events = (barelog_event_t *) (manager.mem_space.phy_base);
+	manager.shr_events.imax = BARELOG_SHARED_MEM_PER_CORE_MAX
 		/ sizeof(barelog_event_t);
-	shr_events.index = 0;
+	manager.shr_events.index = 0;
 
-	events.head = 0;
-	events.tail = 0;
-	events.full = 0;
-	events.empty = 1;
+	manager.events.head = 0;
+	manager.events.tail = 0;
+	manager.events.full = 0;
+	manager.events.empty = 1;
 
 #if BARELOG_SAFE_MODE
 	mutex_byte_address = platform.mem_space.phy_base + core;
 #endif
 
+	manager.initialized = 1;
+
 	return BARELOG_NB_CORES;
 }
 
 int8_t device_mem_manager_write_buffer(barelog_event_t event) {
-	if (events.full) {
+	if (manager.events.full) {
 		int8_t ret = 0;
 		(void) ret;
 		switch (manager.buffer_policy) {
@@ -165,7 +160,7 @@ int8_t device_mem_manager_write_buffer(barelog_event_t event) {
 			return BARELOG_SUCCESS;
 			break;
 		case REPLACE:
-			events.tail = (events.tail + 1)
+			manager.events.tail = (manager.events.tail + 1)
 				% BARELOG_EVENT_PER_CORE_MAX;
 			break;
 		case FLUSH:
@@ -202,16 +197,16 @@ int8_t device_mem_manager_write_buffer(barelog_event_t event) {
 		}
 	}
 
-	events.buffer[events.head] = event;
-	events.buffer[events.head].core = core;
-	events.empty = 0;
+	manager.events.buffer[manager.events.head] = event;
+	manager.events.buffer[manager.events.head].core = manager.core;
+	manager.events.empty = 0;
 
-	events.head = (events.head + 1) % BARELOG_EVENT_PER_CORE_MAX;
+	manager.events.head = (manager.events.head + 1) % BARELOG_EVENT_PER_CORE_MAX;
 
 	/* If the next case to fulfill is already taken */
-	if (events.head == events.tail) {
+	if (manager.events.head == manager.events.tail) {
 		/* The buffer is full */
-		events.full = 1;
+		manager.events.full = 1;
 	}
 
 	return BARELOG_SUCCESS;
@@ -219,9 +214,9 @@ int8_t device_mem_manager_write_buffer(barelog_event_t event) {
 
 inline int8_t device_mem_manager_clean_buffer(void) {
 	uint32_t events_to_read =
-			(events.full) ?
+			(manager.events.full) ?
 				BARELOG_EVENT_PER_CORE_MAX :
-				(mod((events.head - events.tail),
+				(mod((manager.events.head - manager.events.tail),
 					BARELOG_EVENT_PER_CORE_MAX));
 	return device_mem_manager_clean(events_to_read);
 }
@@ -237,32 +232,32 @@ int8_t device_mem_manager_clean(uint32_t n) {
 	}
 #endif
 
-	if (events.empty) {
+	if (manager.events.empty) {
 		return BARELOG_SUCCESS;
 	}
 
 	uint32_t ind = 0;
-	uint32_t imax = mod((events.head - 1), BARELOG_EVENT_PER_CORE_MAX);
+	uint32_t imax = mod((manager.events.head - 1), BARELOG_EVENT_PER_CORE_MAX);
 	for (uint32_t i = 0; i < n; ++i) {
-		ind = (events.tail + i) % BARELOG_EVENT_PER_CORE_MAX;
-		events.buffer[ind] = BARELOG_EVENT_INITIALIZER;
+		ind = (manager.events.tail + i) % BARELOG_EVENT_PER_CORE_MAX;
+		manager.events.buffer[ind] = BARELOG_EVENT_INITIALIZER;
 		if (ind == imax) {
-			events.empty = 1;
+			manager.events.empty = 1;
 			break;
 		}
 	}
 
-	events.tail = (ind + 1) % BARELOG_EVENT_PER_CORE_MAX;
-	events.full = 0;
+	manager.events.tail = (ind + 1) % BARELOG_EVENT_PER_CORE_MAX;
+	manager.events.full = 0;
 
 	return BARELOG_SUCCESS;
 }
 
 inline int8_t device_mem_manager_flush_buffer(void) {
 	uint32_t events_to_read =
-			(events.full) ?
+			(manager.events.full) ?
 				BARELOG_EVENT_PER_CORE_MAX :
-				(mod((events.head - events.tail),
+				(mod((manager.events.head - manager.events.tail),
 					BARELOG_EVENT_PER_CORE_MAX));
 	return device_mem_manager_flush(events_to_read);
 }
@@ -285,9 +280,9 @@ int8_t device_mem_manager_flush(uint32_t n) {
 	uint32_t n2 = 0;
 
 	uint32_t events_to_read =
-		(events.full) ?
+		(manager.events.full) ?
 			BARELOG_EVENT_PER_CORE_MAX :
-			(mod((events.head - events.tail),
+			(mod((manager.events.head - manager.events.tail),
 				BARELOG_EVENT_PER_CORE_MAX));
 
 	if (events_to_read == 0) {
@@ -299,16 +294,16 @@ int8_t device_mem_manager_flush(uint32_t n) {
 
 	uint32_t barelog_total_events_size = nmax * sizeof(barelog_event_t);
 
-	if ((shr_events.imax - shr_events.index + 1) < nmax) {
+	if ((manager.shr_events.imax - manager.shr_events.index + 1) < nmax) {
 		switch (manager.memory_policy) {
 		case SKIP:
 			return BARELOG_SUCCESS;
 			break;
 		case REPLACE:
-			shr_events.index = 0;
+			manager.shr_events.index = 0;
 			break;
 		case DESTROY:
-			shr_events.index = 0;
+			manager.shr_events.index = 0;
 			ret = device_mem_manager_clean_memory();
 #if BARELOG_CHECK_MODE || BARELOG_DEBUG_MODE
 			if (ret != BARELOG_SUCCESS) {
@@ -332,13 +327,13 @@ int8_t device_mem_manager_flush(uint32_t n) {
 	 *
 	 * Otherwise we just flush the buffer from the tail of the queue to nmax.
 	 */
-	if ((events.tail + nmax - 1) >= BARELOG_EVENT_PER_CORE_MAX) {
-		n1 = BARELOG_EVENT_PER_CORE_MAX - events.tail;
+	if ((manager.events.tail + nmax - 1) >= BARELOG_EVENT_PER_CORE_MAX) {
+		n1 = BARELOG_EVENT_PER_CORE_MAX - manager.events.tail;
 		if (n1) {
 			if (manager.write(
-				&(shr_events.events[shr_events.index]),
+				&(manager.shr_events.events[manager.shr_events.index]),
 				n1 * sizeof(barelog_event_t),
-				(const void *) (&(events.buffer[events.tail]))) != BARELOG_SUCCESS) {
+				(const void *) (&(manager.events.buffer[manager.events.tail]))) != BARELOG_SUCCESS) {
 				barelog_set_mutex(0);
 				ret = BARELOG_SHRMEM_WRITE_ERR;
 				BARELOG_DEBUG(__FILE__, __LINE__, ret,
@@ -349,9 +344,9 @@ int8_t device_mem_manager_flush(uint32_t n) {
 		n2 = nmax - n1;
 		if (n2) {
 			if (manager.write(
-				&(shr_events.events[shr_events.index]),
+				&(manager.shr_events.events[manager.shr_events.index]),
 				n2 * sizeof(barelog_event_t),
-				(const void *) (&(events.buffer[0]))) != BARELOG_SUCCESS) {
+				(const void *) (&(manager.events.buffer[0]))) != BARELOG_SUCCESS) {
 				barelog_set_mutex(0);
 				ret = BARELOG_SHRMEM_WRITE_ERR;
 				BARELOG_DEBUG(__FILE__, __LINE__, ret,
@@ -360,9 +355,9 @@ int8_t device_mem_manager_flush(uint32_t n) {
 			}
 		}
 	} else {
-		if (manager.write(&(shr_events.events[shr_events.index]),
+		if (manager.write(&(manager.shr_events.events[manager.shr_events.index]),
 			barelog_total_events_size,
-			(const void *) (&(events.buffer[events.tail]))) != BARELOG_SUCCESS) {
+			(const void *) (&(manager.events.buffer[manager.events.tail]))) != BARELOG_SUCCESS) {
 			barelog_set_mutex(0);
 
 			ret = BARELOG_SHRMEM_WRITE_ERR;
@@ -372,7 +367,7 @@ int8_t device_mem_manager_flush(uint32_t n) {
 		}
 	} barelog_set_mutex(0);
 
-	shr_events.index += nmax;
+	manager.shr_events.index += nmax;
 
 	ret = BARELOG_SUCCESS;
 	BARELOG_DEBUG(__FILE__, __LINE__, ret, "flushing success !");
@@ -382,14 +377,14 @@ int8_t device_mem_manager_flush(uint32_t n) {
 
 int8_t device_mem_manager_clean_memory(void) {
 	barelog_try_mutex(); barelog_set_mutex(1);
-	memset(mem_space.base, 0, mem_space.length);
+	memset(manager.mem_space.base, 0, manager.mem_space.length);
 	barelog_set_mutex(0);
 
-	shr_events.index = 0;
+	manager.shr_events.index = 0;
 
 	return BARELOG_SUCCESS;
 }
 
 int8_t device_mem_manager_is_buffer_full(void) {
-	return events.full;
+	return manager.events.full;
 }

@@ -1,0 +1,4 @@
+<map id="barelog_device_mem_manager_t" name="barelog_device_mem_manager_t">
+<area shape="rect" id="node2" href="$structbarelog__shared__mem__buffer__t.html" title="barelog_shared_mem\l_buffer_t" alt="" coords="5,5,152,47"/>
+<area shape="rect" id="node3" href="$structbarelog__event__buffer__t.html" title="barelog_event_buffer_t" alt="" coords="176,13,331,39"/>
+</map>

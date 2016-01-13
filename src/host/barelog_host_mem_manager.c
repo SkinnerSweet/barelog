@@ -39,16 +39,7 @@
  */
 #define BARELOG_MEM_SPACE_DATA_SIZE 512
 
-/* Different shared memory sections to use to store
- * events for each logged core. The last mem_space
- * is used to reference the location of the mutexes
- * bytes in shared memory (if used, see BARELOG_SAFE_MODE flag).
- */
-static barelog_mem_space_t mem_space[BARELOG_HOST_NB_MEM_SPACE];
-
 static barelog_host_mem_manager_t manager;
-
-static uint8_t initialized = 0;
 
 #if BARELOG_SAFE_MODE
 #define barelog_get_mutex(core, mutex) do { \
@@ -91,7 +82,7 @@ int8_t host_mem_manager_init(const barelog_platform_t platform,
 		int8_t (*finalize)(void *mem_space)) {
 
 #if BARELOG_CHECK_MODE || BARELOG_DEBUG_MODE
-	if (initialized || !init || !finalize || !platform.mem_space.phy_base) {
+	if (manager.initialized || !init || !finalize || !platform.mem_space.phy_base) {
 		return BARELOG_UNINITIALIZED_PARAM_ERR;
 	}
 
@@ -125,42 +116,42 @@ int8_t host_mem_manager_init(const barelog_platform_t platform,
 #endif // BARELOG_SAFE_MODE
 
 #if BARELOG_DEBUG_MODE
-	mem_space[BARELOG_DEBUG_MODE_I].phy_base = platform.mem_space.phy_base + BARELOG_DEBUG_OFF;
-	mem_space[BARELOG_DEBUG_MODE_I].length = BARELOG_DEBUG_MEM_SIZE;
-	mem_space[BARELOG_DEBUG_MODE_I].alignment = platform.mem_space.alignment;
-	mem_space[BARELOG_DEBUG_MODE_I].word_size = platform.mem_space.word_size;
-	mem_space[BARELOG_DEBUG_MODE_I].data = calloc(1, BARELOG_MEM_SPACE_DATA_SIZE);
-	mem_space[BARELOG_DEBUG_MODE_I].base = manager.init(mem_space[BARELOG_DEBUG_MODE_I].phy_base,
-							mem_space[BARELOG_DEBUG_MODE_I].length,
-							mem_space[BARELOG_DEBUG_MODE_I].data);
-	if (mem_space[BARELOG_DEBUG_MODE_I].base == NULL) {
-		free(mem_space[BARELOG_DEBUG_MODE_I].data);
+	manager.mem_space[BARELOG_DEBUG_MODE_I].phy_base = platform.mem_space.phy_base + BARELOG_DEBUG_OFF;
+	manager.mem_space[BARELOG_DEBUG_MODE_I].length = BARELOG_DEBUG_MEM_SIZE;
+	manager.mem_space[BARELOG_DEBUG_MODE_I].alignment = platform.mem_space.alignment;
+	manager.mem_space[BARELOG_DEBUG_MODE_I].word_size = platform.mem_space.word_size;
+	manager.mem_space[BARELOG_DEBUG_MODE_I].data = calloc(1, BARELOG_MEM_SPACE_DATA_SIZE);
+	manager.mem_space[BARELOG_DEBUG_MODE_I].base = manager.init(manager.mem_space[BARELOG_DEBUG_MODE_I].phy_base,
+		manager.mem_space[BARELOG_DEBUG_MODE_I].length,
+		manager.mem_space[BARELOG_DEBUG_MODE_I].data);
+	if (manager.mem_space[BARELOG_DEBUG_MODE_I].base == NULL) {
+		free(manager.mem_space[BARELOG_DEBUG_MODE_I].data);
 		return BARELOG_ERR;
 	}
-	memset(mem_space[BARELOG_DEBUG_MODE_I].base, 0, BARELOG_DEBUG_MEM_SIZE);
+	memset(manager.mem_space[BARELOG_DEBUG_MODE_I].base, 0, BARELOG_DEBUG_MEM_SIZE);
 #endif // BARELOG_DEBUG_MODE
 	/* End of Barelog's configuration areas. */
 
 	/* Barelog's data areas, used to store events in shared memory : */
 	void *base = platform.mem_space.phy_base + BARELOG_SHARED_MEM_DATA_OFFSET;
 	for (uint32_t i = 0; i < BARELOG_NB_CORES; ++i) {
-		mem_space[i].phy_base = base
+		manager.mem_space[i].phy_base = base
 				+ i * BARELOG_SHARED_MEM_PER_CORE_MAX;
-		mem_space[i].length = BARELOG_SHARED_MEM_PER_CORE_MAX;
-		mem_space[i].alignment = platform.mem_space.alignment;
-		mem_space[i].word_size = platform.mem_space.word_size;
-		mem_space[i].data = calloc(1, BARELOG_MEM_SPACE_DATA_SIZE);
-		mem_space[i].base = manager.init(mem_space[i].phy_base,
-				mem_space[i].length, mem_space[i].data);
-		if (mem_space[i].base == NULL) {
-			free(mem_space[i].data);
+		manager.mem_space[i].length = BARELOG_SHARED_MEM_PER_CORE_MAX;
+		manager.mem_space[i].alignment = platform.mem_space.alignment;
+		manager.mem_space[i].word_size = platform.mem_space.word_size;
+		manager.mem_space[i].data = calloc(1, BARELOG_MEM_SPACE_DATA_SIZE);
+		manager.mem_space[i].base = manager.init(manager.mem_space[i].phy_base,
+			manager.mem_space[i].length, manager.mem_space[i].data);
+		if (manager.mem_space[i].base == NULL) {
+			free(manager.mem_space[i].data);
 			return i - 1;
 		}
-		memset(mem_space[i].base, 0, mem_space[i].length);
+		memset(manager.mem_space[i].base, 0, manager.mem_space[i].length);
 	}
 	/* End of Barelog's data areas. */
 
-	initialized = 1;
+	manager.initialized = 1;
 
 	return BARELOG_NB_CORES;
 }
@@ -168,13 +159,13 @@ int8_t host_mem_manager_init(const barelog_platform_t platform,
 int8_t host_mem_manager_finalize(void) {
 
 #if BARELOG_CHECK_MODE || BARELOG_DEBUG_MODE
-	if (!initialized) {
+	if (!manager.initialized) {
 		return BARELOG_INCONSISTENT_PARAM_ERR;
 	}
 #endif
 
 	for (uint32_t i = 0; i < BARELOG_HOST_NB_MEM_SPACE; ++i) {
-		if (manager.finalize(mem_space[i].data) != BARELOG_SUCCESS) {
+		if (manager.finalize(manager.mem_space[i].data) != BARELOG_SUCCESS) {
 			/* FIXME : it could not always be the "data" field that corresponds to
 			 * the data to deallocate. A safest way to proceed could be
 			 * to do a reverse on mmap and to clean the corresponding allocated
@@ -183,10 +174,10 @@ int8_t host_mem_manager_finalize(void) {
 			*/
 			return i;
 		}
-		free(mem_space[i].data);
+		free(manager.mem_space[i].data);
 	}
 
-	initialized = 0;
+	manager.initialized = 0;
 
 	return BARELOG_NB_CORES;
 }
@@ -210,7 +201,7 @@ int32_t host_mem_manager_read_mem_space(uint32_t core, barelog_event_t **events)
 
 	barelog_try_mutex(core);
 	barelog_set_mutex(core, 1);
-	const void *base = mem_space[core].base; // On lit du cote host donc on lit dans les @virtuelles !
+	const void *base = manager.mem_space[core].base; // On lit du cote host donc on lit dans les @virtuelles !
 	ret = manager.read(base, BARELOG_EVENT_PER_CORE_SHR_MEM_MAX*sizeof(barelog_event_t), (void *) (*events));
 
 #if BARELOG_CHECK_MODE || BARELOG_DEBUG_MODE
@@ -235,7 +226,7 @@ int32_t host_mem_manager_read_mem_space(uint32_t core, barelog_event_t **events)
 int8_t host_mem_manager_read_debug(void) {
 	int8_t ret = BARELOG_SUCCESS;
 	barelog_event_t event;
-	void *base = mem_space[BARELOG_DEBUG_MODE_I].base;
+	void *base = manager.mem_space[BARELOG_DEBUG_MODE_I].base;
 
 	memcpy(&event, base, sizeof(barelog_event_t));
 

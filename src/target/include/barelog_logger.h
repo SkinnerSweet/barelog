@@ -28,7 +28,7 @@
  * Only this module should be used by the target program.
  *
  * @author Thomas Bertauld
- * @date 17/10/2015
+ * @date 24/11/2015
  */
 
 #ifndef __BARELOG_LOGGER__
@@ -43,11 +43,28 @@
 #include "barelog_device_mem_manager.h"
 
 /**
+ * Defines the different possible logging levels.
+ */
+typedef enum {
+	BARELOG_OFF = 0,
+	BARELOG_CRITICAL_LVL,
+	BARELOG_ERROR_LVL,
+	BARELOG_WARNING_LVL,
+	BARELOG_DEBUG_LVL,
+	BARELOG_INFO_LVL
+} barelog_lvl_t;
+
+#ifndef BARELOG_DEFAULT_LOG_LVL
+#define BARELOG_DEFAULT_LOG_LVL BARELOG_INFO_LVL
+#endif // BARELOG_DEFAULT_LOG_LVL
+
+/**
  * Structure used to hold all of the barelog logger functions.
  * We use pointers to allow the user to use the functions of their choice,
  * depending on the logged platform.
  */
 typedef struct {
+	barelog_lvl_t log_lvl;
 	/** Function used to retrieve the current clock of the core.
 	 * @return a timestamp on 32 bits.
 	 */
@@ -100,8 +117,23 @@ extern int8_t barelog_start(void) __attribute__ ((cold));
  * If a real and functional get_clock() function was given upon initialization,
  * it will be used to automatically add a timestamp to the created event
  * containing the message.
+ *
+ * @param lvl the log-level of the event.
+ * @param format the event's data formatting string, followed, if needed, by
+ * the corresponding data values.
  */
-extern int8_t barelog_log(const char *format, ...) __attribute__ ((hot));
+extern int8_t barelog_log(barelog_lvl_t lvl, const char *format, ...) __attribute__ ((hot));
+
+/**
+ * Does the same thing as barelog_log but flushes directly the
+ * computed event and cleans the corresponding buffer.
+ * @see barelog_log
+ */
+extern int8_t barelog_immediate_log(barelog_lvl_t lvl, const char *format, ...) __attribute__ ((hot));
+
+extern void barelog_set_log_lvl(barelog_lvl_t lvl);
+
+extern barelog_lvl_t barelog_get_log_lvl(void);
 
 /**
  * @see device_mem_manager_clean_buffer

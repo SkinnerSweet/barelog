@@ -112,19 +112,44 @@ $(document).ready(function(){initNavTree('structbarelog__device__mem__manager__t
 <div class="contents">
 
 <p><code>#include &lt;<a class="el" href="barelog__device__mem__manager_8h_source.html">barelog_device_mem_manager.h</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for barelog_device_mem_manager_t:</div>
+<div class="dyncontent">
+<div class="center"><img src="structbarelog__device__mem__manager__t__coll__graph.png" border="0" usemap="#barelog__device__mem__manager__t_coll__map" alt="Collaboration graph"/></div>
+<map name="barelog__device__mem__manager__t_coll__map" id="barelog__device__mem__manager__t_coll__map">
+<area shape="rect" id="node2" href="structbarelog__shared__mem__buffer__t.html" title="barelog_shared_mem\l_buffer_t" alt="" coords="5,5,152,47"/><area shape="rect" id="node3" href="structbarelog__event__buffer__t.html" title="barelog_event_buffer_t" alt="" coords="176,13,331,39"/></map>
+<center><span class="legend">[<a target="top" href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
 Data Fields</h2></td></tr>
-<tr class="memitem:a6d960b901f10bd7200be97192fe8d3c4"><td class="memItemLeft" align="right" valign="top">int8_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarelog__device__mem__manager__t.html#a6d960b901f10bd7200be97192fe8d3c4">read</a> )(const void *address, size_t size, void *buffer)</td></tr>
-<tr class="separator:a6d960b901f10bd7200be97192fe8d3c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a03c2f48b2b276c9442422a3f9602aed5"><td class="memItemLeft" align="right" valign="top">int8_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarelog__device__mem__manager__t.html#a03c2f48b2b276c9442422a3f9602aed5">write</a> )(void *address, size_t size, const void *buffer)</td></tr>
-<tr class="separator:a03c2f48b2b276c9442422a3f9602aed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ade75a7887fab8796f9cca6334fcac92f"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ade75a7887fab8796f9cca6334fcac92f"></a>
+uint8_t&#160;</td><td class="memItemRight" valign="bottom"><b>initialized</b></td></tr>
+<tr class="separator:ade75a7887fab8796f9cca6334fcac92f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2d04142977aad1ed67d13851f09c40d8"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d04142977aad1ed67d13851f09c40d8"></a>
+uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>core</b></td></tr>
+<tr class="separator:a2d04142977aad1ed67d13851f09c40d8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77f0900c27f0482e05dc6e849e927e4d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a77f0900c27f0482e05dc6e849e927e4d"></a>
+barelog_mem_space_t&#160;</td><td class="memItemRight" valign="bottom"><b>mem_space</b></td></tr>
+<tr class="separator:a77f0900c27f0482e05dc6e849e927e4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a375adeda5a88a79cd35abd13be615355"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a375adeda5a88a79cd35abd13be615355"></a>
+<a class="el" href="structbarelog__event__buffer__t.html">barelog_event_buffer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>events</b></td></tr>
+<tr class="separator:a375adeda5a88a79cd35abd13be615355"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3d74a5084f79f9a4c1ed369662c04c5a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3d74a5084f79f9a4c1ed369662c04c5a"></a>
+<a class="el" href="structbarelog__shared__mem__buffer__t.html">barelog_shared_mem_buffer_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>shr_events</b></td></tr>
+<tr class="separator:a3d74a5084f79f9a4c1ed369662c04c5a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6f5513bd6e07f78423f62a0b6cc48e35"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6f5513bd6e07f78423f62a0b6cc48e35"></a>
 <a class="el" href="barelog__policy_8h.html#adf17e1225b1df5ab70f4acb5a0eb2492">barelog_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>buffer_policy</b></td></tr>
 <tr class="separator:a6f5513bd6e07f78423f62a0b6cc48e35"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c9e099a57888e899192a759d2a683d2"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3c9e099a57888e899192a759d2a683d2"></a>
 <a class="el" href="barelog__policy_8h.html#adf17e1225b1df5ab70f4acb5a0eb2492">barelog_policy_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>memory_policy</b></td></tr>
 <tr class="separator:a3c9e099a57888e899192a759d2a683d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6d960b901f10bd7200be97192fe8d3c4"><td class="memItemLeft" align="right" valign="top">int8_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarelog__device__mem__manager__t.html#a6d960b901f10bd7200be97192fe8d3c4">read</a> )(const void *address, size_t size, void *buffer)</td></tr>
+<tr class="separator:a6d960b901f10bd7200be97192fe8d3c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a03c2f48b2b276c9442422a3f9602aed5"><td class="memItemLeft" align="right" valign="top">int8_t(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structbarelog__device__mem__manager__t.html#a03c2f48b2b276c9442422a3f9602aed5">write</a> )(void *address, size_t size, const void *buffer)</td></tr>
+<tr class="separator:a03c2f48b2b276c9442422a3f9602aed5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af7ea341c2cd70fb7a51f3730a4250866"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af7ea341c2cd70fb7a51f3730a4250866"></a>
+void *&#160;</td><td class="memItemRight" valign="bottom"><b>debug_address</b></td></tr>
+<tr class="separator:af7ea341c2cd70fb7a51f3730a4250866"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Structure used to hold all of the barelog device manager functions. We use pointers to allow the user to use the functions of their choice, depending on the logged platform. </p>
@@ -150,7 +175,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS if all is clear, an error code otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__device__mem__manager_8h_source.html#l00059">59</a> of file <a class="el" href="barelog__device__mem__manager_8h_source.html">barelog_device_mem_manager.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__device__mem__manager_8h_source.html#l00073">73</a> of file <a class="el" href="barelog__device__mem__manager_8h_source.html">barelog_device_mem_manager.h</a>.</p>
 
 </div>
 </div>
@@ -173,7 +198,7 @@ Data Fields</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS if all is clear, an error code otherwise. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__device__mem__manager_8h_source.html#l00066">66</a> of file <a class="el" href="barelog__device__mem__manager_8h_source.html">barelog_device_mem_manager.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__device__mem__manager_8h_source.html#l00080">80</a> of file <a class="el" href="barelog__device__mem__manager_8h_source.html">barelog_device_mem_manager.h</a>.</p>
 
 </div>
 </div>
@@ -186,7 +211,7 @@ Data Fields</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="structbarelog__device__mem__manager__t.html">barelog_device_mem_manager_t</a></li>
-    <li class="footer">Generated on Sat Oct 17 2015 16:57:15 for barelog by
+    <li class="footer">Generated on Wed Nov 25 2015 15:31:26 for barelog by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

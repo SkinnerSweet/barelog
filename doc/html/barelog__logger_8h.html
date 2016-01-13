@@ -106,6 +106,7 @@ $(document).ready(function(){initNavTree('barelog__logger_8h.html','');});
   <div class="summary">
 <a href="#nested-classes">Data Structures</a> &#124;
 <a href="#define-members">Macros</a> &#124;
+<a href="#enum-members">Enumerations</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">barelog_logger.h File Reference</div>  </div>
@@ -144,6 +145,9 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
+<tr class="memitem:aadc65ffdef9d018b638595499662cdd0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aadc65ffdef9d018b638595499662cdd0"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>BARELOG_DEFAULT_LOG_LVL</b>&#160;&#160;&#160;BARELOG_INFO_LVL</td></tr>
+<tr class="separator:aadc65ffdef9d018b638595499662cdd0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a38ece7d71d09e3965c534f9b39b02ebb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a38ece7d71d09e3965c534f9b39b02ebb">barelog_clean_buffer</a>()&#160;&#160;&#160;<a class="el" href="barelog__device__mem__manager_8h.html#aa8aaa019e14ff7168ef1583f2cefbace">device_mem_manager_clean_buffer</a>()</td></tr>
 <tr class="separator:a38ece7d71d09e3965c534f9b39b02ebb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35151c45dc22a94d4ef0b1e8d8da34d7"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a35151c45dc22a94d4ef0b1e8d8da34d7">barelog_clean</a>(n)&#160;&#160;&#160;<a class="el" href="barelog__device__mem__manager_8h.html#a162936ac3b0025695807a714049e69ce">device_mem_manager_clean</a>(n)</td></tr>
@@ -157,20 +161,42 @@ Macros</h2></td></tr>
 <tr class="memitem:a18b4d799895114f1cef69879206f9c43"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a18b4d799895114f1cef69879206f9c43">barelog_clean_memory</a>()&#160;&#160;&#160;<a class="el" href="barelog__device__mem__manager_8h.html#a0fa6e5c257acb2c1f33bb0dd40acc64f">device_mem_manager_clean_memory</a>()</td></tr>
 <tr class="separator:a18b4d799895114f1cef69879206f9c43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
+Enumerations</h2></td></tr>
+<tr class="memitem:a09445da48188bdd9761a1d9bf15deade"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a> { <br />
+&#160;&#160;<b>BARELOG_OFF</b> = 0, 
+<b>BARELOG_CRITICAL_LVL</b>, 
+<b>BARELOG_ERROR_LVL</b>, 
+<b>BARELOG_WARNING_LVL</b>, 
+<br />
+&#160;&#160;<b>BARELOG_DEBUG_LVL</b>, 
+<b>BARELOG_INFO_LVL</b>
+<br />
+ }</td></tr>
+<tr class="separator:a09445da48188bdd9761a1d9bf15deade"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:a6c9c8e207a3c017a4af8fc45740c810e"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a6c9c8e207a3c017a4af8fc45740c810e">barelog_init_logger</a> (const uint32_t my_core, const <a class="el" href="structbarelog__platform__t.html">barelog_platform_t</a> platform, const <a class="el" href="barelog__policy_8h.html#adf17e1225b1df5ab70f4acb5a0eb2492">barelog_policy_t</a> buffer_policy, const <a class="el" href="barelog__policy_8h.html#adf17e1225b1df5ab70f4acb5a0eb2492">barelog_policy_t</a> memory_policy, int8_t(*read)(const void *address, size_t size, void *buffer), int8_t(*write)(void *address, size_t size, const void *buffer), uint32_t(*get_clock)(void), int8_t(*init_clock)(void), int8_t(*start_clock)(void)) <a class="el" href="barelog__mem__space_8h.html#abc28df08c6256142ba10007f0cf42a13">__attribute__</a>((cold))</td></tr>
 <tr class="separator:a6c9c8e207a3c017a4af8fc45740c810e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad368580e97a1ce261a3172f99e11efc0"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#ad368580e97a1ce261a3172f99e11efc0">barelog_start</a> (void) <a class="el" href="barelog__mem__space_8h.html#abc28df08c6256142ba10007f0cf42a13">__attribute__</a>((cold))</td></tr>
 <tr class="separator:ad368580e97a1ce261a3172f99e11efc0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af7e4e57f4ec0086f1354cd69674e1f43"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#af7e4e57f4ec0086f1354cd69674e1f43">barelog_log</a> (const char *format,...) <a class="el" href="barelog__mem__space_8h.html#abc28df08c6256142ba10007f0cf42a13">__attribute__</a>((hot))</td></tr>
-<tr class="separator:af7e4e57f4ec0086f1354cd69674e1f43"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3f42b27ec9aa7b19502fe9db114a39f4"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a3f42b27ec9aa7b19502fe9db114a39f4">barelog_log</a> (<a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a> lvl, const char *format,...) <a class="el" href="barelog__mem__space_8h.html#abc28df08c6256142ba10007f0cf42a13">__attribute__</a>((hot))</td></tr>
+<tr class="separator:a3f42b27ec9aa7b19502fe9db114a39f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a077e57831374ce9a9d03ba3f219e9aab"><td class="memItemLeft" align="right" valign="top">int8_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="barelog__logger_8h.html#a077e57831374ce9a9d03ba3f219e9aab">barelog_immediate_log</a> (<a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a> lvl, const char *format,...) <a class="el" href="barelog__mem__space_8h.html#abc28df08c6256142ba10007f0cf42a13">__attribute__</a>((hot))</td></tr>
+<tr class="separator:a077e57831374ce9a9d03ba3f219e9aab"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e6cab877e429dded8080f216b5cc4af"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7e6cab877e429dded8080f216b5cc4af"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>barelog_set_log_lvl</b> (<a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a> lvl)</td></tr>
+<tr class="separator:a7e6cab877e429dded8080f216b5cc4af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7939b8c1eb7c60080588eb90fb930196"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7939b8c1eb7c60080588eb90fb930196"></a>
+<a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>barelog_get_log_lvl</b> (void)</td></tr>
+<tr class="separator:a7939b8c1eb7c60080588eb90fb930196"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>Module providing some nice wrapping for the device_mem_manager. </p>
 <p>Only this module should be used by the target program.</p>
 <dl class="section author"><dt>Author</dt><dd>Thomas Bertauld </dd></dl>
-<dl class="section date"><dt>Date</dt><dd>17/10/2015 </dd></dl>
+<dl class="section date"><dt>Date</dt><dd>24/11/2015 </dd></dl>
 
 <p>Definition in file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 </div><h2 class="groupheader">Macro Definition Documentation</h2>
@@ -189,7 +215,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__device__mem__manager_8h.html#a162936ac3b0025695807a714049e69ce">device_mem_manager_clean</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00114">114</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00146">146</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 
 </div>
 </div>
@@ -207,7 +233,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__device__mem__manager_8h.html#aa8aaa019e14ff7168ef1583f2cefbace">device_mem_manager_clean_buffer</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00109">109</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00141">141</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 
 </div>
 </div>
@@ -225,7 +251,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__device__mem__manager_8h.html#a0fa6e5c257acb2c1f33bb0dd40acc64f">device_mem_manager_clean_memory</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00134">134</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00166">166</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 
 </div>
 </div>
@@ -244,7 +270,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__device__mem__manager_8h.html#a9e7e5cddb1c6b846435ec7aaf8caa30e">device_mem_manager_flush</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00124">124</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00156">156</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 
 </div>
 </div>
@@ -262,7 +288,7 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__device__mem__manager_8h.html#ad37b960a3bfc77a5a6549cc84d1c783b">device_mem_manager_flush_buffer</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00119">119</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00151">151</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 
 </div>
 </div>
@@ -280,11 +306,62 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__device__mem__manager_8h.html#a59cc512d952adbc5d520c3681d7ca33a">device_mem_manager_is_buffer_full</a> </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00129">129</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00161">161</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Enumeration Type Documentation</h2>
+<a class="anchor" id="a09445da48188bdd9761a1d9bf15deade"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">enum <a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Defines the different possible logging levels. </p>
+
+<p>Definition at line <a class="el" href="barelog__logger_8h_source.html#l00048">48</a> of file <a class="el" href="barelog__logger_8h_source.html">barelog_logger.h</a>.</p>
 
 </div>
 </div>
 <h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="a077e57831374ce9a9d03ba3f219e9aab"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int8_t barelog_immediate_log </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a>&#160;</td>
+          <td class="paramname"><em>lvl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>format</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>...</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>Does the same thing as barelog_log but flushes directly the computed event and cleans the corresponding buffer. </p><dl class="section see"><dt>See also</dt><dd><a class="el" href="barelog__logger_8h.html#a3f42b27ec9aa7b19502fe9db114a39f4">barelog_log</a> </dd></dl>
+
+<p>Definition at line <a class="el" href="barelog__logger_8c_source.html#l00096">96</a> of file <a class="el" href="barelog__logger_8c_source.html">barelog_logger.c</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a6c9c8e207a3c017a4af8fc45740c810e"></a>
 <div class="memitem">
 <div class="memproto">
@@ -370,13 +447,19 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="af7e4e57f4ec0086f1354cd69674e1f43"></a>
+<a class="anchor" id="a3f42b27ec9aa7b19502fe9db114a39f4"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">int8_t barelog_log </td>
           <td>(</td>
+          <td class="paramtype"><a class="el" href="barelog__logger_8h.html#a09445da48188bdd9761a1d9bf15deade">barelog_lvl_t</a>&#160;</td>
+          <td class="paramname"><em>lvl</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
           <td class="paramtype">const char *&#160;</td>
           <td class="paramname"><em>format</em>, </td>
         </tr>
@@ -393,7 +476,14 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The logging function, follows the same format than printf(). If a real and functional get_clock() function was given upon initialization, it will be used to automatically add a timestamp to the created event containing the message. </p>
+<p>The logging function, follows the same format than printf(). If a real and functional get_clock() function was given upon initialization, it will be used to automatically add a timestamp to the created event containing the message.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">lvl</td><td>the log-level of the event. </td></tr>
+    <tr><td class="paramname">format</td><td>the event's data formatting string, followed, if needed, by the corresponding data values. </td></tr>
+  </table>
+  </dd>
+</dl>
 
 <p>Definition at line <a class="el" href="barelog__logger_8c_source.html#l00075">75</a> of file <a class="el" href="barelog__logger_8c_source.html">barelog_logger.c</a>.</p>
 
@@ -412,9 +502,9 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Starts the logging engine. Should be called before any subsequent call to the <a class="el" href="barelog__logger_8h.html#af7e4e57f4ec0086f1354cd69674e1f43">barelog_log()</a> function. </p><dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS on success, or an error code if something went wrong. </dd></dl>
+<p>Starts the logging engine. Should be called before any subsequent call to the <a class="el" href="barelog__logger_8h.html#a3f42b27ec9aa7b19502fe9db114a39f4">barelog_log()</a> function. </p><dl class="section return"><dt>Returns</dt><dd>BARELOG_SUCCESS on success, or an error code if something went wrong. </dd></dl>
 
-<p>Definition at line <a class="el" href="barelog__logger_8c_source.html#l00061">61</a> of file <a class="el" href="barelog__logger_8c_source.html">barelog_logger.c</a>.</p>
+<p>Definition at line <a class="el" href="barelog__logger_8c_source.html#l00062">62</a> of file <a class="el" href="barelog__logger_8c_source.html">barelog_logger.c</a>.</p>
 
 </div>
 </div>
@@ -424,7 +514,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
   <ul>
     <li class="navelem"><a class="el" href="dir_1bbcb9615bce09de8292fb64e7b04403.html">target</a></li><li class="navelem"><a class="el" href="dir_7db0c2058728c0cc11dd629f56b2188c.html">include</a></li><li class="navelem"><a class="el" href="barelog__logger_8h.html">barelog_logger.h</a></li>
-    <li class="footer">Generated on Sat Oct 17 2015 16:57:15 for barelog by
+    <li class="footer">Generated on Wed Nov 25 2015 15:31:26 for barelog by
     <a href="http://www.doxygen.org/index.html">
     <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.9.1 </li>
   </ul>

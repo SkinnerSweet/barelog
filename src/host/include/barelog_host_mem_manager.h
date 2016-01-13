@@ -30,7 +30,7 @@
  * the shared memory once the logging session is over.
  *
  * @author Thomas Bertauld
- * @date 17/10/2015
+ * @date 24/11/2015
  */
 
 #ifndef __BARELOG_HOST_MEM_MANAGER__
@@ -49,6 +49,14 @@
  * depending on the logged platform.
  */
 typedef struct {
+	/* State of the host memory manager */
+	uint8_t initialized;
+	/* Different shared memory sections to use to store
+	 * events for each logged core. The last mem_space
+	 * is used to reference the location of the mutexes
+	 * bytes in shared memory (if used, see BARELOG_SAFE_MODE flag).
+	 */
+	barelog_mem_space_t mem_space[BARELOG_HOST_NB_MEM_SPACE];
 	/**
 	 * Function used to initialize a chunk in the shared memory space.
 	 * @param address the beginning address of the chunk to initialize.

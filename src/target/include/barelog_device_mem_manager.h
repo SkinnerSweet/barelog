@@ -30,7 +30,7 @@
  * the shared memory once the logging session is over.
  *
  * @author Thomas Bertauld
- * @date 17/10/2015
+ * @date 24/11/2015
  */
 
 #ifndef __BARELOG_DEVICE_MEM_MANAGER__
@@ -50,6 +50,20 @@
  * depending on the logged platform.
  */
 typedef struct {
+	/* State of this device manager */
+	uint8_t initialized;
+	/* Core associated to this manager */
+	uint32_t core;
+	/* Memory space associated to this manager/core */
+	barelog_mem_space_t mem_space;
+	/* Events buffer associated to this manager/core */
+	barelog_event_buffer_t events;
+	/* Shared memory part associated to this manager/core */
+	barelog_shared_mem_buffer_t shr_events;
+	/* policy to apply on the local events buffer */
+	barelog_policy_t buffer_policy;
+	/* policy to apply on the shared memory events buffer */
+	barelog_policy_t memory_policy;
 	/** Function used by the target to read into the shared memory.
 	 * @param address the address to read.
 	 * @param size the size of the memory to read.
@@ -64,10 +78,10 @@ typedef struct {
 	 * @return BARELOG_SUCCESS if all is clear, an error code otherwise.
 	 */
 	int8_t (*write)(void * address, size_t size, const void *buffer);
-	/* policy to apply on the local events buffer */
-	barelog_policy_t buffer_policy;
-	/* policy to apply on the shared memory events buffer */
-	barelog_policy_t memory_policy;
+#if BARELOG_DEBUG_MODE
+	/* Shared memory address to use if debug information are needed */
+	void *debug_address;
+#endif // BARELOG_DEBUG_MODE
 } barelog_device_mem_manager_t;
 
 /**

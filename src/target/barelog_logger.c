@@ -50,6 +50,7 @@ int8_t barelog_init_logger(const uint32_t my_core,
 	logger.get_clock = my_get_clock;
 	logger.init_clock = my_init_clock;
 	logger.start_clock = my_start_clock;
+	logger.log_lvl = BARELOG_DEFAULT_LOG_LVL;
 
 	if (!logger.get_clock) {
 		logger.get_clock = default_get_clock;
@@ -61,7 +62,6 @@ int8_t barelog_init_logger(const uint32_t my_core,
 int8_t barelog_start(void) {
 	int8_t ret = 0;
 #if BARELOG_CHECK_MODE || BARELOG_DEBUG_MODE
-	ret = 0;
 	if (!logger.init_clock || !logger.start_clock) {
 		ret = BARELOG_UNINITIALIZED_PARAM_ERR;
 		BARELOG_DEBUG(__FILE__, __LINE__, ret, "barelog_start param");
@@ -72,7 +72,11 @@ int8_t barelog_start(void) {
 	return (ret + logger.start_clock());
 }
 
-int8_t barelog_log(const char *format, ...) {
+int8_t barelog_log(barelog_lvl_t lvl, const char *format, ...) {
+
+	if (lvl > logger.log_lvl) {
+		return -1;
+	}
 
 	barelog_event_t event = BARELOG_EVENT_INITIALIZER;
 
@@ -87,4 +91,27 @@ int8_t barelog_log(const char *format, ...) {
 
 	return device_mem_manager_write_buffer(event);
 
+}
+
+int8_t barelog_immediate_log(barelog_lvl_t lvl, const char *format, ...) {
+	if (lvl > logger.log_lvl) {
+		return -1;
+	}
+	int8_t ret = 0;
+	va_list ap;
+	va_start(ap, format);
+	ret += barelog_log(lvl, format, ap);
+	ret += barelog_flush(1);
+	ret += barelog_clean(1);
+	va_end(ap);
+
+	return ret;
+}
+
+void barelog_set_log_lvl(barelog_lvl_t lvl) {
+	logger.log_lvl = lvl;
+}
+
+barelog_lvl_t barelog_get_log_lvl(void) {
+	return logger.log_lvl;
 }

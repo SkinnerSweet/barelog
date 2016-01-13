@@ -50,6 +50,7 @@ void * my_init(void * address, size_t size, void * data) {
 	return ret;
 }
 
+
 int8_t my_finalize(void * mem_space) {
 	return e_free(mem_space);
 }
