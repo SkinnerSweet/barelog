@@ -74,17 +74,9 @@ HOBJS = $(HTARGET).o barelog_host_mem_manager.o barelog_event.o
 
 all: host target clean
 
-ifeq ($(HLIBTYPE),so)
-host: $(LIBDIR) $(HTARGET).so
-else
-host: $(LIBDIR) $(HTARGET).a
-endif
+host: $(LIBDIR) $(HTARGET).$(HLIBTYPE)
 
-ifeq ($(TLIBTYPE),so)
-target: $(LIBDIR) $(TTARGET).so
-else
-target: $(LIBDIR) $(TTARGET).a
-endif
+target: $(LIBDIR) $(TTARGET).$(TLIBTYPE)
 
 $(HTARGET).so: $(HOBJS) 
 	$(LD) -o $(LIBDIR)/lib$@ -shared $^

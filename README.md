@@ -65,12 +65,15 @@ the specific core that doesn't run any kernel.
      TLIBTYPE flags (where 'H' stands for Host and 'T' for Target). The default
      behavior is to produce static libraries.
 
+```sh
     make
-    
+```
   Or
 
+```sh
     make HLIBTYPE=so TLIBTYP=a
-    
+```
+
 If everything went well, two libraries should have been produced in the **libs**
 folder :
 
@@ -121,14 +124,18 @@ First of all, make sure that the previously generated barelog's libraries can be
 found by the compiler/linker. Assuming that your using gcc, you just need to
 specify the -L option :
 
+```sh
     gcc -L path/to/libraries/
-    
+ ```
+
 You will then have to build the host program using the **libbarelog_host** library
 and the target program with the **libbarelog_logger** library :
 
+```sh
     gcc -L path/to/libraries/ target_main.c -lbarelog_logger
     gcc -L path/to/libraries/ host_main.c -lbarelog_host
-    
+```
+
 Of course, this need to be adapted in case you need to use another compiler.
 
 ### Create your own configuration file
